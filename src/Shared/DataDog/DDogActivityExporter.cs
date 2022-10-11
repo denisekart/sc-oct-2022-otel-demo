@@ -9,9 +9,7 @@ internal class DDogActivityExporter : BaseExporter<Activity>
     {
         using var scope = SuppressInstrumentationScope.Begin();
 
-        foreach (var activity in batch)
-        {
-        }
+        // TODO: Implementation
 
         return ExportResult.Success;
     }

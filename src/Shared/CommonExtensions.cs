@@ -57,11 +57,6 @@ public static class CommonExtensions
                 {
                     builder.AddConsoleExporter();
                 }
-
-                if (opts.EnableDataDogExporter)
-                {
-                    builder.AddProcessor(new BatchDDogLogProcessor(new DDogLogExporter(resource, opts!)));
-                }
             });
     }
 

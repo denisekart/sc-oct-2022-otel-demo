@@ -9,12 +9,7 @@ internal class DDogMetricExporter : BaseExporter<Metric>
     {
         using var scope = SuppressInstrumentationScope.Begin();
 
-        foreach (var metric in batch)
-        {
-            foreach (ref readonly var metricPoint in metric.GetMetricPoints())
-            {
-            }
-        }
+        // TODO: Implementation
 
         return ExportResult.Success;
     }
