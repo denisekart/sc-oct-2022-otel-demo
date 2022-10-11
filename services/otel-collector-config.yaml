@@ -1,0 +1,84 @@
+# See more at https://github.com/open-telemetry/opentelemetry-collector-contrib
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  hostmetrics:
+    collection_interval: 10s
+    scrapers:
+      paging:
+        metrics:
+          system.paging.utilization:
+            enabled: true
+      cpu:
+        metrics:
+          system.cpu.utilization:
+            enabled: true
+      disk:
+      filesystem:
+        metrics:
+          system.filesystem.utilization:
+            enabled: true
+      load:
+      memory:
+      network:
+      processes:
+
+exporters:
+  datadog:
+    api:
+      key: "${DD_API_KEY}"
+      site: datadoghq.eu
+
+  prometheus:
+    endpoint: "0.0.0.0:8889"
+    const_labels:
+      label1: value1
+
+  logging:
+
+  jaeger:
+    endpoint: jaeger-all-in-one:14250
+    tls:
+      insecure: true
+
+processors:
+  batch:
+  attributes/insert:
+    actions:
+      - key: "env"
+        value: "dev"
+        action: insert
+      - key: "source"
+        value: "sc-oct-2022-otel-demo"
+        action: insert
+      - key: "team"
+        value: "Cobras"
+        action: insert
+      - key: "location"
+        value: "Local"
+        action: insert
+  
+extensions:
+  health_check:
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [pprof, zpages, health_check]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [attributes/insert, batch]
+      exporters: [logging, datadog]
+    traces:
+      receivers: [otlp]
+      processors: [attributes/insert, batch]
+      exporters: [logging, jaeger, datadog]
+    metrics:
+      receivers: [hostmetrics, otlp]
+      processors: [attributes/insert, batch]
+      exporters: [logging, prometheus, datadog]
