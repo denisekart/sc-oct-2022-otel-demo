@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		services\docker-compose.yaml = services\docker-compose.yaml
 		services\otel-collector-config.yaml = services\otel-collector-config.yaml
 		services\prometheus.yaml = services\prometheus.yaml
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "src\Shared\Shared.csproj", "{81266EE4-26BD-415B-B412-3CA7C0BDD581}"
